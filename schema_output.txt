@@ -1,0 +1,42 @@
+[dotenv@17.2.3] injecting env (7) from .env -- tip: ≡ƒæÑ sync secrets across teammates & machines: https://dotenvx.com/ops
+Columns: [
+  'id',
+  'name',
+  'title',
+  'bio',
+  'specializations',
+  'education',
+  'years_of_experience',
+  'availability',
+  'price',
+  'image_url',
+  'location',
+  'created_at',
+  'user_id',
+  'languages'
+]
+Sample Row: {
+  id: '24ab0fd4-dc0f-45e9-bf48-a33a66883d41',
+  name: 'Nisha C T ',
+  title: 'Consultant psychologist ',
+  bio: 'Nisha C T is a consultant psychologist with an MSc and BSc in Psychology, specializing in couples and relationship counselling, premarital guidance, and emotional well-being. She supports individuals and couples dealing with anxiety, stress, personality concerns, and behavioural challenges, helping them build healthier relationships, self-awareness, and personal growth.',
+  specializations: [
+    'couple',
+    'relationship',
+    'premarital counseling',
+    'Anxiety & stress',
+    'personality',
+    'Behavioural concern',
+    'emotional wellbeing',
+    'self growth.'
+  ],
+  education: [ 'Msc psychology', 'Bsc' ],
+  years_of_experience: 5,
+  availability: '',
+  price: 1499,
+  image_url: 'https://res.cloudinary.com/dkpo8qps9/image/upload/v1768074017/i4rdswpjmoy04gbgq6ye.jpg',
+  location: 'Calicut',
+  created_at: '2026-01-10T19:41:16.991011+00:00',
+  user_id: 'df2913cc-18a1-42ff-81ca-b45d509312ec',
+  languages: [ 'Malayalam', 'English' ]
+}
