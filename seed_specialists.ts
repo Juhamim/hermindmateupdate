@@ -192,7 +192,7 @@ const specialists = [
         title: "Yoga Specialist",
         years_of_experience: 4,
         specializations: ["Yoga", "Meditation", "Mindfulness"],
-        education: ["BNYS" || "PhD Yoga"],
+        education: ["BNYS", "PhD Yoga"],
         price: 800,
         categories: ["yoga"]
     },
