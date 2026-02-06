@@ -3,10 +3,9 @@
 import { createClient } from "../supabase/server";
 import { createAdminClient } from "../supabase/admin";
 import { Database } from "../database.types";
+import { sendBookingConfirmationEmail, BookingEmailData } from "../email/emailService";
 
 export type BookingInsert = Database['public']['Tables']['bookings']['Insert'];
-
-
 
 export async function createBooking(bookingData: BookingInsert) {
     // Use Admin Client to bypass RLS (Guest users need to insert and select back)
@@ -40,6 +39,51 @@ export async function createBooking(bookingData: BookingInsert) {
     if (error) {
         console.error('Error creating booking:', error);
         throw new Error('Failed to create booking');
+    }
+
+    // 4. Send Email Notification (Don't block booking if email fails)
+    try {
+        // Get psychologist details for email
+        const { data: psychologist } = await supabase
+            .from('psychologists')
+            .select('name')
+            .eq('id', data.psychologist_id)
+            .single();
+
+        if (psychologist && bookingData.user_email) {
+            const emailData: BookingEmailData = {
+                customerName: bookingData.user_name || "Customer",
+                customerEmail: bookingData.user_email,
+                psychologistName: psychologist.name,
+                appointmentDate: new Date(data.start_time).toLocaleDateString('en-IN', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                }),
+                appointmentTime: new Date(data.start_time).toLocaleTimeString('en-IN', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                }),
+                bookingId: data.id,
+                amount: data.amount || 0,
+                packageName: package_details ? JSON.parse(package_details).name : undefined,
+                meetingLink: data.meeting_link || undefined
+            };
+
+            // Send email asynchronously (don't wait for it)
+            sendBookingConfirmationEmail(emailData).then(result => {
+                if (result.success) {
+                    console.log(`✅ Booking confirmation email sent to ${emailData.customerEmail}`);
+                } else {
+                    console.error('❌ Failed to send booking confirmation email:', result.error);
+                }
+            });
+        }
+    } catch (emailError) {
+        // Log but don't fail the booking
+        console.error('Error sending booking email:', emailError);
     }
 
     return data;
