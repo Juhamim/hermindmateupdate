@@ -18,3 +18,9 @@ SMTP_PASS=your-app-password-here
 
 # Application URL (for email links)
 NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# Cloudinary Image Upload
+# Sign up at: https://cloudinary.com/users/register_free
+# Create unsigned upload preset in Settings → Upload
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your-cloud-name-here
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your-upload-preset-name
